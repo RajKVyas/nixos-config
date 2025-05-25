@@ -5,7 +5,7 @@
   inputs = {
     # Define nixpkgs input. You can choose a specific branch.
     # 'nixos-24.05' is a stable branch. Use 'nixos-unstable' for more recent packages.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     # If you plan to use home-manager in the future, you'd add it here like so:
     # home-manager = {
