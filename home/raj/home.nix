@@ -67,9 +67,9 @@
   # For example:
   # home.file.".config/hypr/hyprland.conf".source = ../dotfiles/hyprland.conf;
   # home.xdg.configFile."kitty/kitty.conf".source = ../dotfiles/kitty.conf;
-  home.xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
-  home.xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
-  home.xdg.configFile."neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
+  # home.xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
+  # home.xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
+  # home.xdg.configFile."neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
   # Session variables can also be set here if they are user-specific
   # environment.sessionVariables = {
   #   EDITOR = "nvim";

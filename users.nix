@@ -10,7 +10,7 @@
   };
 
   # Home Manager configuration for the user 'raj'
-  home-manager.users.raj = import ../home/raj/home.nix; # Adjusted path
+  home-manager.users.raj = import ./home/raj/home.nix; # Adjusted path
 
   # If you want Home Manager to use the system's nixpkgs, which is a good practice:
   home-manager.useGlobalPkgs = true;

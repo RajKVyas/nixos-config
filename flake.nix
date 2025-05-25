@@ -9,7 +9,7 @@
 
     # If you plan to use home-manager in the future, you'd add it here like so:
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs"; # Ensures home-manager uses the same nixpkgs
     };
   };
