@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -e # Exit immediately if a command exits with a non-zero status.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
@@ -44,19 +44,38 @@ git commit -m "$COMMIT_MESSAGE"
 echo "Commit successful."
 echo "---"
 
-read -p "Push changes to remote? (y/N): " push_choice
-case "$push_choice" in
-  y|Y )
-    echo "Pushing to remote..."
-    # Assumes your remote is configured (e.g., 'origin')
-    # and you want to push the current branch.
-    # You might want to be more specific, e.g., git push origin main
-    git push
-    echo "Push successful."
-    ;;
-  * )
-    echo "Push skipped."
-    ;;
-esac
-echo "---"
+# Get all configured remote names
+REMOTE_NAMES=($(git remote | sort -u))
+
+if [ ${#REMOTE_NAMES[@]} -eq 0 ]; then
+    echo "No remotes configured. Skipping push."
+else
+    echo "Configured remotes: ${REMOTE_NAMES[*]}"
+    read -p "Push changes to all configured remotes? (y/N): " push_all_choice
+    if [[ "$push_all_choice" =~ ^[Yy]$ ]]; then
+        CURRENT_BRANCH=$(git symbolic-ref --short HEAD) # Get current branch name
+        TAGS_EXIST=$(git tag -l | wc -l)
+
+        echo "Current branch is '$CURRENT_BRANCH'."
+        echo "---"
+
+        for remote_name in "${REMOTE_NAMES[@]}"; do
+            echo "Pushing branch '$CURRENT_BRANCH' to remote '$remote_name'..."
+            git push "$remote_name" "$CURRENT_BRANCH"
+            echo "Push of branch '$CURRENT_BRANCH' to '$remote_name' successful."
+
+            if [ "$TAGS_EXIST" -gt 0 ]; then
+                echo "Pushing all tags to remote '$remote_name'..."
+                git push --tags "$remote_name"
+                echo "Push of tags to '$remote_name' successful."
+            else
+                echo "No tags to push for remote '$remote_name'."
+            fi
+            echo "---"
+        done
+    else
+        echo "Push skipped."
+    fi
+fi
+
 echo "Git update script finished."
