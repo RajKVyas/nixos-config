@@ -8,13 +8,13 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     # If you plan to use home-manager in the future, you'd add it here like so:
-    # home-manager = {
-    #   url = "github:nix-community/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs"; # Ensures home-manager uses the same nixpkgs
-    # };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs"; # Ensures home-manager uses the same nixpkgs
+    };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     # Define your NixOS system configuration.
     # 'r-pc' should match your system's hostname defined in system.nix
     nixosConfigurations."r-pc" = nixpkgs.lib.nixosSystem {
@@ -28,7 +28,7 @@
         ./configuration.nix
 
         # If you were using home-manager, you would add its module here:
-        # inputs.home-manager.nixosModules.default
+        inputs.home-manager.nixosModules.default
       ];
     };
 

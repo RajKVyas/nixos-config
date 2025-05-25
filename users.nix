@@ -7,27 +7,20 @@
     isNormalUser = true;
     description = "R";
     extraGroups = [ "networkmanager" "wheel" "audio" ]; # Common groups for admin, network, audio
-    packages = with pkgs; [
-      # Utilities
-      brightnessctl
-      cliphist
-      lshw # List hardware
-      neofetch
-      pavucontrol # PulseAudio Volume Control
-      wl-clipboard # Wayland clipboard utilities
-      
-      # Applications
-      discord
-      firefox
-
-      # Hyprland/Sway ecosystem
-      grim # Screenshot utility for Wayland
-      mako # Notification daemon for Wayland
-      slurp # Region selection for Wayland (used with grim)
-      swaybg # Wallpaper utility (or hyprpaper)
-      swaylock-effects # Screen locker with effects
-      waybar # Status bar for Wayland compositors
-      wofi # Application launcher / menu for Wayland
-    ];
   };
+
+  # Home Manager configuration for the user 'raj'
+  home-manager.users.raj = import ../home/raj/home.nix; # Adjusted path
+
+  # If you want Home Manager to use the system's nixpkgs, which is a good practice:
+  home-manager.useGlobalPkgs = true;
+
+  # If you want packages installed by Home Manager to be available system-wide
+  # (e.g., in /etc/profiles/per-user/raj) rather than just ~/.nix-profile.
+  # This can be useful for consistency and for tools that expect system-wide paths.
+  home-manager.useUserPackages = true;
+
+  # You can also pass specialArgs to your home-manager configurations if needed
+  # home-manager.extraSpecialArgs = { inherit inputs; }; # 'inputs' would need to be passed to this module
+  # However, specialArgs from flake.nix are already available.
 }
