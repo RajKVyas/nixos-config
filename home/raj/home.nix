@@ -64,12 +64,9 @@
   # programs.waybar.enable = true; # etc.
 
   # Dotfile management will be added here.
-  # For example:
-  # home.file.".config/hypr/hyprland.conf".source = ../dotfiles/hyprland.conf;
-  # home.xdg.configFile."kitty/kitty.conf".source = ../dotfiles/kitty.conf;
-  # home.xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
-  # home.xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
-  # home.xdg.configFile."neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
+  xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
+  # xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
+  xdg.configFile."neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
   # Session variables can also be set here if they are user-specific
   # environment.sessionVariables = {
   #   EDITOR = "nvim";

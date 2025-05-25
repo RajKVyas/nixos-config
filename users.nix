@@ -23,4 +23,6 @@
   # You can also pass specialArgs to your home-manager configurations if needed
   # home-manager.extraSpecialArgs = { inherit inputs; }; # 'inputs' would need to be passed to this module
   # However, specialArgs from flake.nix are already available.
+
+  home-manager.backupFileExtension = "hm-bak";
 }
