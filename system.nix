@@ -45,6 +45,10 @@
   # --- Nix Package Manager Settings ---
   nixpkgs.config.allowUnfree = true; # Allow installation of unfree packages
 
+  # Flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.auto-optimise-store = true;
+
   nix.gc = { # Garbage collection settings
     automatic = true;
     dates = "weekly";
