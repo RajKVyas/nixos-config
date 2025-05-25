@@ -7,7 +7,7 @@
   # --- System Boot ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   # --- Networking ---
   networking.hostName = "r-pc"; # Define your hostname
@@ -29,7 +29,7 @@
   time.timeZone = "America/New_York"; # Set your time zone
 
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.consoleKeyMap = "us"; # Keymap for TTY console
+  console.keyMap = "us"; # Keymap for TTY console
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";

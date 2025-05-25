@@ -11,7 +11,7 @@
   hardware.graphics.enable = true;
 
   # Enable 32-bit OpenGL support (for games, Wine, Steam)
-  hardware.opengl.driSupport32Bit = true;
+  hardware.graphics.enable32Bit = true;
 
   # Specify NVIDIA drivers for Xorg/Xwayland
   services.xserver.videoDrivers = [ "nvidia" ];
