@@ -32,7 +32,7 @@
     wl-clipboard # Wayland clipboard utilities
     
     # Applications
-    discord
+    vesktop
     firefox
 
     # Hyprland/Sway ecosystem
