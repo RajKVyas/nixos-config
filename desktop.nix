@@ -35,6 +35,16 @@
     xwayland.enable = true; # For X11 compatibility in Wayland
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk # Or -kde if you prefer Qt apps primarily
+    ];
+    # Optional: You can explicitly set Hyprland as a default for some interfaces
+    configPackages = [ pkgs.hyprland ]; # Might be needed depending on specific portal interactions
+  };
+
   # Session variables for Wayland applications
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # Advise Electron/Chromium apps to use Wayland
 
