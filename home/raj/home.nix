@@ -39,10 +39,16 @@
     grim # Screenshot utility for Wayland
     mako # Notification daemon for Wayland
     slurp # Region selection for Wayland (used with grim)
-    swaybg # Wallpaper utility (or hyprpaper)
+    hyprpaper # Wallpaper utility
     swaylock-effects # Screen locker with effects
     waybar # Status bar for Wayland compositors
     wofi # Application launcher / menu for Wayland
+    playerctl
+    xdg-utils
+    networkmanagerapplet
+    bibata-cursors #capitaine-cursors
+    dolphin
+    jq
   ];
 
   # Basic git configuration (example)
@@ -67,6 +73,21 @@
   xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
   # xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
   xdg.configFile."neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
+
+  xdg.configFile."hypr/hyprpaper.conf".text = ''
+    # preload = /path/to/your/wallpaper.png  # Replace with an actual path to your wallpaper
+    # wallpaper = ,/path/to/your/wallpaper.png
+  
+    # For multiple monitors, e.g.:
+    # wallpaper = DP-1,/path/to/wallpaper-for-DP-1.png
+    # wallpaper = HDMI-A-1,/path/to/wallpaper-for-HDMI-A-1.png
+  
+    # To have a fallback if a monitor isn't found
+    # wallpaper = ,fallback_wallpaper.png
+  
+    ipc = off # Or on, if you want to control it via hyprctl
+  '';
+
   # Session variables can also be set here if they are user-specific
   # environment.sessionVariables = {
   #   EDITOR = "nvim";
