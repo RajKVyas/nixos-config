@@ -75,8 +75,8 @@
   xdg.configFile."neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    # preload = /path/to/your/wallpaper.png  # Replace with an actual path to your wallpaper
-    # wallpaper = ,/path/to/your/wallpaper.png
+    preload = ~/nixos-config/home/raj/dotfiles/hypr/linux-nixos-7q-3840x2400.jpg  # Replace with an actual path to your wallpaper
+    wallpaper = ,~/nixos-config/home/raj/dotfiles/hypr/linux-nixos-7q-3840x2400.jpg
   
     # For multiple monitors, e.g.:
     # wallpaper = DP-1,/path/to/wallpaper-for-DP-1.png
