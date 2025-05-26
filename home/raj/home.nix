@@ -47,7 +47,7 @@
     xdg-utils
     networkmanagerapplet
     bibata-cursors #capitaine-cursors
-    dolphin
+    kdePackages.dolphin
     jq
   ];
 
