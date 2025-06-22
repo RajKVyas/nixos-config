@@ -32,6 +32,7 @@
 
   # System packages
   environment.systemPackages = with pkgs; [
+    git
     gnome.gnome-terminal
     firefox
     vim

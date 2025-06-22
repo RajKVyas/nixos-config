@@ -55,7 +55,7 @@
             home-manager.users.raj = import ./home/raj/home.nix;
           }
         ];
-      },
+      };
 
       # WSL configuration
       "wsl" = nixpkgs.lib.nixosSystem {
