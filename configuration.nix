@@ -6,17 +6,18 @@
 
 { config, pkgs, lib, ... }:
 
-{
+let
+  hostType = config.specialArgs.hostType or "desktop";
+in {
   imports =
     [
-
-      # Custom modularized configurations:
       ./system.nix
-      ./desktop.nix
       ./users.nix
       ./packages.nix
+    ] 
+    ++ lib.optionals (hostType != "wsl") [
+      ./desktop.nix
       ./hardware.nix
-
     ];
 
   system.stateVersion = "25.05";

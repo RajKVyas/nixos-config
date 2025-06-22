@@ -6,7 +6,7 @@
   users.users.raj = {
     isNormalUser = true;
     description = "R";
-    extraGroups = [ "networkmanager" "wheel" "audio" ]; # Common groups for admin, network, audio
+    extraGroups = [ "networkmanager" "wheel" "audio" "video" ]; # Common groups for admin, network, audio, video
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGku7xDIheKjNz7RYXaImOiEb+QcPR+43IgZC7dv1WF5"
     ];

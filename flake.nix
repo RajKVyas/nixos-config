@@ -3,18 +3,18 @@
   description = "Raj's NixOS Configuration";
 
   inputs = {
-    # Define nixpkgs input. You can choose a specific branch.
-    # 'nixos-24.05' is a stable branch. Use 'nixos-unstable' for more recent packages.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-
-    # If you plan to use home-manager in the future, you'd add it here like so:
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs"; # Ensures home-manager uses the same nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    # nix-flatpak: declarative flatpak management
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak?ref=v0.6.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Add NixOS-WSL input
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -47,13 +47,26 @@
           inherit inputs;
           systemType = "vm";
         };
-modules = [
+        modules = [
           ./configuration.nix
           inputs.home-manager.nixosModules.default
           ./hosts/vm-generic
           {
             home-manager.users.raj = import ./home/raj/home.nix;
           }
+        ];
+      },
+
+      # WSL configuration
+      "wsl" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+          hostType = "wsl";
+        };
+        modules = [
+          ./configuration.nix
+          ./hosts/wsl
         ];
       };
     };

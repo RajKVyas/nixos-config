@@ -34,6 +34,8 @@
     # Applications
     vesktop
     firefox
+    # JetBrains Mono Nerd Font
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
 
     # Add fzf for the edit-config function
     fzf
@@ -75,7 +77,7 @@
   # Kitty terminal configuration
   programs.kitty = {
     enable = true;
-    font.name = "Fira Code";
+    font.name = "JetBrainsMono Nerd Font"; # Updated for Starship compatibility
     font.size = 12;
     settings = {
       background_opacity = "0.85";
@@ -102,6 +104,19 @@ shellAliases = {
       }
       bindkey -s '^e' 'edit-config\n'
     '';
+  };
+
+  # Starship prompt configuration
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      add_newline = true;
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+      };
+    };
   };
 
   # Shell workflow improvements
