@@ -12,28 +12,62 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs"; # Ensures home-manager uses the same nixpkgs
     };
+    # nix-flatpak: declarative flatpak management
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak?ref=v0.6.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    # Define your NixOS system configuration.
-    # 'r-pc' should match your system's hostname defined in system.nix
-    nixosConfigurations."r-pc" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux"; # Your system architecture
-      specialArgs = {
-        inherit inputs; # This makes flake inputs available to your modules
-        # You can add other special arguments here if needed
-      };
-      modules = [
-        # Path to your main configuration.nix
-        ./configuration.nix
+    nixosConfigurations = {
+      # Bare metal PC
+      "r-pc" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+          systemType = "nvidia"; # Set based on your hardware
+        };
+        modules = [
+          ./configuration.nix
+          inputs.home-manager.nixosModules.default
+          ./hosts/r-pc
 
-        # If you were using home-manager, you would add its module here:
-        inputs.home-manager.nixosModules.default
-      ];
+          # Home-manager configuration for the main user
+          {
+            home-manager.users.raj = import ./home/raj/home.nix;
+          }
+        ];
+      };
+
+      # Generic VM configuration
+      "vm-generic" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit inputs;
+          systemType = "vm";
+        };
+modules = [
+          ./configuration.nix
+          inputs.home-manager.nixosModules.default
+          ./hosts/vm-generic
+          {
+            home-manager.users.raj = import ./home/raj/home.nix;
+          }
+        ];
+      };
     };
 
-    # You can define other outputs later, such as packages, devShells, etc.
-    # For example:
-    # packages.x86_64-linux.my-custom-package = nixpkgs.legacyPackages.x86_64-linux.hello;
+    devShells.x86_64-linux.default = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in pkgs.mkShell {
+      packages = with pkgs; [
+        alejandra
+        nil
+        git
+        nh
+        sops
+      ];
+    };
   };
 }

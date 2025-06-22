@@ -9,7 +9,6 @@
     curl
     git
     htop # Interactive process viewer
-    kitty # GPU-based terminal emulator
     p7zip # For 7zip archives
     unzip
     wget

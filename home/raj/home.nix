@@ -1,4 +1,4 @@
-# /home/raj/nixos-config/home/raj/home.nix
+# /etc/nixos/home/raj/home.nix
 { config, pkgs, lib, ... }:
 
 {
@@ -35,6 +35,18 @@
     vesktop
     firefox
 
+    # Add fzf for the edit-config function
+    fzf
+
+    # --- ADDED: New System & Resource Monitors ---
+    bottom # TUI resource monitor, like htop/btop
+    fastfetch # A faster alternative to neofetch
+    mission-center # GUI resource monitor
+
+    # --- ADDED: New GUI Applications ---
+    easyeffects # Audio effects for PipeWire
+    upscaler # Image upscaling application
+
     # Hyprland/Sway ecosystem
     grim # Screenshot utility for Wayland
     mako # Notification daemon for Wayland
@@ -42,13 +54,15 @@
     hyprpaper # Wallpaper utility
     swaylock-effects # Screen locker with effects
     waybar # Status bar for Wayland compositors
-    wofi # Application launcher / menu for Wayland
+    rofi-wayland # Application launcher (replaces wofi)
+    # wofi # Application launcher / menu for Wayland
     playerctl
     xdg-utils
     networkmanagerapplet
     bibata-cursors #capitaine-cursors
     kdePackages.dolphin
     jq
+    nh
   ];
 
   # Basic git configuration (example)
@@ -58,25 +72,90 @@
     userEmail = "inbox@rajvyas.com"; # Change this
   };
 
-  # Kitty terminal configuration (example, we'll refine this)
+  # Kitty terminal configuration
   programs.kitty = {
     enable = true;
-    # We can link to an existing kitty.conf or define settings here.
-    # For now, just enabling it.
+    font.name = "Fira Code";
+    font.size = 12;
+    settings = {
+      background_opacity = "0.85";
+      # Add other settings from kitty.conf here
+    };
   };
+
+  # Zsh configuration with nh/nix aliases
+  programs.zsh = {
+    enable = true;
+shellAliases = {
+  ns = "nh os switch --flake /etc/nixos#r-pc";
+  nsu = "nix flake update /etc/nixos && nh os switch --flake /etc/nixos#r-pc";
+  nc = "nh clean -k 7d -K 5";
+  nfu = "nix flake update /etc/nixos";
+  run-chroot = "steam-run";
+};
+    initExtra = ''
+      # FZF-based config editing
+      edit-config() {
+        local file
+        file=$(find /etc/nixos -type f -name "*.nix" | fzf --height 40% --layout=reverse --border)
+        [ -n "$file" ] && ${pkgs.nano}/bin/nano "$file"
+      }
+      bindkey -s '^e' 'edit-config\n'
+    '';
+  };
+
+  # Shell workflow improvements
+  programs.nix-direnv.enable = true;
+  programs.nix-index-database.comma.enable = true;
 
   # Add more Home Manager modules for your applications here.
   # For example, for Hyprland related tools if not managed system-wide.
   # programs.waybar.enable = true; # etc.
 
-  # Dotfile management will be added here.
+  # Dotfile management for Hyprland
   xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf;
-  # xdg.configFile."kitty/kitty.conf".source = ./dotfiles/kitty/kitty.conf;
-  xdg.configFile."neofetch/config.conf".source = ./dotfiles/neofetch/config.conf;
+  
+  # Neofetch configuration
+  programs.neofetch = {
+    enable = true;
+    settings = {
+      print_info = ''
+        info title
+        info underline
+        info "OS" distro
+        info "Host" model
+        info "Kernel" kernel
+        info "Uptime" uptime
+        info "Packages" packages
+        info "Shell" shell
+        info "Resolution" resolution
+        info "DE" de
+        info "WM" wm
+        info "Theme" theme
+        info "Icons" icons
+        info "Terminal" term
+        info "Terminal Font" term_font
+        info "CPU" cpu
+        info "GPU" gpu
+        info "Memory" memory
+        info cols
+      '';
+      image_backend = "ascii";
+      ascii_distro = "NixOS_small";
+      # Add other settings from config.conf here
+    };
+  };
+  
+  # Wayland utilities
+  programs.waybar.enable = true;
+  programs.mako.enable = true;
 
-  xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ~/nixos-config/home/raj/dotfiles/hypr/linux-nixos-7q-3840x2400.jpg  # Replace with an actual path to your wallpaper
-    wallpaper = ,~/nixos-config/home/raj/dotfiles/hypr/linux-nixos-7q-3840x2400.jpg
+  # Wallpaper configuration using Nix store path
+  xdg.configFile."hypr/hyprpaper.conf".text = let
+    wallpaper = ./dotfiles/hypr/linux-nixos-7q-3840x2400.jpg;
+  in ''
+    preload = ${wallpaper}
+    wallpaper = ,${wallpaper}
   
     # For multiple monitors, e.g.:
     # wallpaper = DP-1,/path/to/wallpaper-for-DP-1.png

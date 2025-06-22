@@ -1,0 +1,3 @@
+# Enforce Unix-style line endings for shell scripts and Nix files
+*.sh text eol=lf
+*.nix text eol=lf

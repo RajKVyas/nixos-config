@@ -58,7 +58,29 @@
 
   # --- Core System Services ---
   services.ntp.enable = true; # Network Time Protocol for time synchronization
-  # services.openssh.enable = true; # Enable SSH daemon if needed
+  services.openssh.enable = true; # Enable SSH daemon
+  services.openssh.permitRootLogin = "no"; # Secure root login
+  services.openssh.passwordAuthentication = false; # Disable password authentication for SSH
+  services.openssh.port = 3232;
+  services.openssh.extraConfig = ''
+    AllowTcpForwarding no
+    X11Forwarding no
+    AllowAgentForwarding no
+    AllowStreamLocalForwarding no
+    AuthenticationMethods publickey
+  '';
+
+  
+  # Automatic system upgrades
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/etc/nixos";
+    flags = [ "--recreate-boot-entries" ];
+    dates = "03:00";
+  };
+  
+  # Security hardening (basic)
+  security.sudo.execWheelOnly = true;
 
   # Example of other program configurations (can be moved to specific modules if large)
   # programs.mtr.enable = true;

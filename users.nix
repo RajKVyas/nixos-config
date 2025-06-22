@@ -7,10 +7,13 @@
     isNormalUser = true;
     description = "R";
     extraGroups = [ "networkmanager" "wheel" "audio" ]; # Common groups for admin, network, audio
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGku7xDIheKjNz7RYXaImOiEb+QcPR+43IgZC7dv1WF5"
+    ];
+    hashedPasswordFile = config.sops.secrets.raj_password.path;
   };
 
   # Home Manager configuration for the user 'raj'
-  home-manager.users.raj = import ./home/raj/home.nix; # Adjusted path
 
   # If you want Home Manager to use the system's nixpkgs, which is a good practice:
   home-manager.useGlobalPkgs = true;

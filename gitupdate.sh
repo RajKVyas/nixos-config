@@ -45,7 +45,7 @@ echo "Commit successful."
 echo "---"
 
 # Get all configured remote names
-REMOTE_NAMES=($(git remote | sort -u))
+mapfile -t REMOTE_NAMES < <(git remote | sort -u)
 
 if [ ${#REMOTE_NAMES[@]} -eq 0 ]; then
     echo "No remotes configured. Skipping push."

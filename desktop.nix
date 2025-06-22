@@ -12,13 +12,24 @@
     jack.enable = true;  # For JACK compatibility
   };
 
+  # --- Flatpak support with nix-flatpak ---
+  services.flatpak = {
+    enable = true;
+    remotes = [
+      { name = "flathub"; location = "https://dl.flathub.org/repo/flathub.flatpakrepo"; }
+    ];
+    packages = [
+      { appId = "org.nickvision.tubeconverter"; origin = "flathub"; }
+    ];
+  };
+
   # --- Fonts ---
   fonts.packages = with pkgs; [
     dejavu_fonts
     fira-code
     fira-code-symbols
     liberation_ttf
-    mplus-outline-fonts.githubRelease # Corrected attribute if it was a typo for .mplus-outline-fonts
+    mplus-outline-fonts
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
@@ -46,11 +57,17 @@
   };
 
   # Session variables for Wayland applications
-  environment.sessionVariables.NIXOS_OZONE_WL = "1"; # Advise Electron/Chromium apps to use Wayland
 
   # X11 Keyboard configuration (also used by XWayland)
   services.xserver.xkb = {
     layout = "us";
     variant = "";
+  };
+
+  # Gaming optimization
+  programs.steam = {
+    enable = true;
+    # remotePlay.openFirewall = true; # Optional: for Steam Remote Play
+    # dedicatedServer.openFirewall = true; # Optional
   };
 }
