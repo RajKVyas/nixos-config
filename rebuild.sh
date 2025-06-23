@@ -4,9 +4,12 @@ set -e # Exit immediately if a command exits with a non-zero status.
 # Get the absolute path to the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
-# Your hostname as defined in flake.nix nixosConfigurations."<hostname>"
-# You confirmed your hostname is 'r-pc'
-HOSTNAME="r-pc"
+# Set hostname from first argument or use default
+DEFAULT_HOST="r-pc"
+HOSTNAME="${1:-$DEFAULT_HOST}"
+
+# Shift arguments so remaining ones go to nixos-rebuild
+shift
 
 echo "Rebuilding NixOS configuration for host: $HOSTNAME"
 echo "Flake location: $SCRIPT_DIR"
