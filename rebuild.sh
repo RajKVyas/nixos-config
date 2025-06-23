@@ -14,7 +14,7 @@ echo "---"
 
 # Pass all arguments given to this script to nixos-rebuild
 # This allows you to do ./rebuild.sh --upgrade or other flags
-sudo nixos-rebuild switch --flake "$SCRIPT_DIR#$HOSTNAME" "$@"
+sudo nixos-rebuild switch --flake "path:$SCRIPT_DIR#$HOSTNAME" "$@"
 
 echo "---"
 echo "Rebuild complete."

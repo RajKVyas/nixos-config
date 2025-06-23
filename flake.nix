@@ -10,7 +10,6 @@
     };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak?ref=v0.6.0";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     # Add NixOS-WSL input
     nixos-wsl = {
@@ -67,6 +66,9 @@
         modules = [
           ./configuration.nix
           ./hosts/wsl
+          # Add Home Manager for WSL
+          inputs.home-manager.nixosModules.default
+          { home-manager.users.raj = import ./home/raj/home.nix; }
         ];
       };
     };

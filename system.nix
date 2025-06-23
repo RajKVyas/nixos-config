@@ -72,12 +72,12 @@
 
   
   # Automatic system upgrades
-  system.autoUpgrade = {
-    enable = true;
-    flake = "/etc/nixos";
-    flags = [ "--recreate-boot-entries" ];
-    dates = "03:00";
-  };
+system.autoUpgrade = {
+  enable = true;
+  flake = "path:/etc/nixos";
+  flags = [ "--recreate-boot-entries" ];
+  dates = "03:00";
+};
   
   # Security hardening (basic)
   security.sudo.execWheelOnly = true;
