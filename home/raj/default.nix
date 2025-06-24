@@ -88,6 +88,16 @@
   # Zsh configuration with nh/nix aliases
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
+    enableVteIntegration = true;
+    autosuggestion.enable = true;
+    antidote.enable = true; # Zsh plugin manager
+    antidote.plugins = with pkgs; [
+      "zsh-users/zsh-autosuggestions"
+      "zsh-users/zsh-completions"
+      "zsh-users/zsh-history-substring-search"
+    ];
+    syntaxHighlighting.enable = true;
     shellAliases = {
       ns = "nh os switch --flake /etc/nixos#$(hostname)";
       nsu = "cd /etc/nixos && nix flake update && nh os switch --flake .#$(hostname)";

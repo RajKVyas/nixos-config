@@ -1,0 +1,4 @@
+{ config, pkgs, ... }:
+{
+  # KDE configuration
+}

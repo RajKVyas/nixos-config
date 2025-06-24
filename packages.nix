@@ -13,7 +13,7 @@ environment.systemPackages = with pkgs; [
   wget
   comma
   nano
-  nvim
+  neovim
   lynis # Security auditing tool
   clamav # Antivirus scanner
 

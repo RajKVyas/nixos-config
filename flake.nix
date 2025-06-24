@@ -19,8 +19,11 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+  # Add the entire repository to the store
+  nixosConfig = self;
+  
 commonModules = [
-  ./configuration.nix
+  "${nixosConfig}/hosts/common.nix"
   inputs.home-manager.nixosModules.default
   { home-manager.users.raj = import ./home/raj/home.nix; }
   inputs.nix-flatpak.nixosModules.nix-flatpak

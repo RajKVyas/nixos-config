@@ -4,6 +4,8 @@
 { config, pkgs, lib, ... }:
 
 {
+  environment.pathsToLink = [ "/share/zsh" ];
+
   # Enable redistributable firmware (e.g., microcode)
   hardware.enableRedistributableFirmware = true;
 

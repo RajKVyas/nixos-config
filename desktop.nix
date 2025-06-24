@@ -3,6 +3,9 @@
 { config, pkgs, lib, ... }:
 
 {
+  # Enable Zsh system-wide for global configuration
+  programs.zsh.enable = true;
+
   # --- Audio ---
   services.pipewire = {
     enable = true;
@@ -28,12 +31,10 @@
     dejavu_fonts
     fira-code
     fira-code-symbols
-    liberation_ttf
-    mplus-outline-fonts
+    mplus-outline-fonts.osdnRelease
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
-
     # Nerd Fonts for icon support (only keep essential fonts)
     nerd-fonts.jetbrains-mono  # Used by Kitty terminal and Starship
     nerd-fonts.symbols-only    # Provides essential icons

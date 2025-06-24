@@ -15,11 +15,11 @@
       "render" # Needed for GPU access
     ]; 
     shell = pkgs.zsh; # Set zsh as default shell
+    ignoreShellProgramCheck = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGku7xDIheKjNz7RYXaImOiEb+QcPR+43IgZC7dv1WF5"
     ];
     initialHashedPassword = null;
   };
 
-
-}
+  }
