@@ -26,8 +26,7 @@
   boot.loader.systemd-boot.enable = false;
 
   # Disable display manager (ly) since we'll start Hyprland manually
-  services.displayManager.ly.enable = false;
-
+  services.displayManager.ly.enable = lib.mkForce false;
 
   # Disable systemd-timesyncd (handled by Windows host)
   services.timesyncd.enable = false;
