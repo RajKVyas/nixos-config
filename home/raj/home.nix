@@ -162,9 +162,6 @@
   #   };
   # };
 
-  # Wayland utilities
-  programs.mako.enable = true;  # Notification daemon for Wayland (re-enabled as issue resolved)
-
   # Wallpaper configuration using Nix store path
   xdg.configFile."hypr/hyprpaper.conf".text = ''
     preload = ${./dotfiles/hypr/linux-nixos-7q-3840x2400.jpg}

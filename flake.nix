@@ -23,7 +23,7 @@ commonModules = [
   ./configuration.nix
   inputs.home-manager.nixosModules.default
   { home-manager.users.raj = import ./home/raj/home.nix; }
-  inputs.nix-flatpak.nixosModules.default
+  inputs.nix-flatpak.nixosModules.nix-flatpak
 ];
 in {
     nixosConfigurations = {
