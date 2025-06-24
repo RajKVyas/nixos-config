@@ -127,7 +127,6 @@
 
   # Add more Home Manager modules for your applications here.
   # For example, for Hyprland related tools if not managed system-wide.
-  # programs.waybar.enable = true; # etc.
 
   # Dotfile management for Hyprland
   xdg.configFile."hypr/hyprland.conf".source = ./dotfiles/hypr/hyprland.conf; # FIXED: Added missing semicolon
@@ -164,7 +163,7 @@
   # };
 
   # Wayland utilities
-  # programs.mako.enable = true;  # Disabled until we resolve option issue
+  programs.mako.enable = true;  # Notification daemon for Wayland (re-enabled as issue resolved)
 
   # Wallpaper configuration using Nix store path
   xdg.configFile."hypr/hyprpaper.conf".text = ''

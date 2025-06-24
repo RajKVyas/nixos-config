@@ -4,9 +4,40 @@
 { config, pkgs, lib, ... }:
 
 {
+  # Enable redistributable firmware (e.g., microcode)
+  hardware.enableRedistributableFirmware = true;
+
   # --- System Boot ---
   # Bootloader configuration moved to host-specific files
   boot.tmp.cleanOnBoot = true;
+
+  # --- Kernel Hardening ---
+  boot.kernel.sysctl = {
+    # Restrict access to kernel logs
+    "kernel.dmesg_restrict" = 1;
+    # Hide kernel pointers from unprivileged users
+    "kernel.kptr_restrict" = 2;
+    # Mitigate ptrace-based attacks
+    "kernel.yama.ptrace_scope" = 1;
+    # Enable strict reverse path filtering to prevent IP spoofing
+    "net.ipv4.conf.all.rp_filter" = 1;
+    "net.ipv4.conf.default.rp_filter" = 1;
+    # Log packets with impossible addresses
+    "net.ipv4.conf.all.log_martians" = 1;
+    "net.ipv4.conf.default.log_martians" = 1;
+    # Disable acceptance of ICMP redirects (prevents MITM attacks)
+    "net.ipv4.conf.all.accept_redirects" = 0;
+    "net.ipv4.conf.default.accept_redirects" = 0;
+    "net.ipv6.conf.all.accept_redirects" = 0;
+    "net.ipv6.conf.default.accept_redirects" = 0;
+    # Disable acceptance of source-routed packets
+    "net.ipv4.conf.all.accept_source_route" = 0;
+    "net.ipv4.conf.default.accept_source_route" = 0;
+    "net.ipv6.conf.all.accept_source_route" = 0;
+    "net.ipv6.conf.default.accept_source_route" = 0;
+    # Protect against time-wait assassination attacks
+    "net.ipv4.tcp_rfc1337" = 1;
+  };
 
   # --- Networking ---
   networking.hostName = lib.mkDefault "r-pc"; # Define your hostname (can be overridden by host-specific configs)
@@ -70,23 +101,22 @@
   };
 
   
-  # Automatic system upgrades
-system.autoUpgrade = {
-  enable = true;
-  flake = "path:/etc/nixos";
-  flags = [ "--recreate-boot-entries" ];
-  dates = "03:00";
-};
+  # Automatic system upgrades (disabled)
+# Disabled autoUpgrade - manual updates preferred
+# system.autoUpgrade = {
+#   enable = true;
+#   flake = "path:/etc/nixos";
+#   flags = [ "--recreate-boot-entries" ];
+#   dates = "03:00";
+# };
   
   # Security hardening (basic)
   security.sudo.execWheelOnly = true;
 
-  # Enable Zsh system-wide
-  programs.zsh = {
-    enable = true;
-    # Enable autocompletion and other useful features
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
+  # Malware scanning
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
   };
 
   # Example of other program configurations (can be moved to specific modules if large)
@@ -107,7 +137,7 @@ system.autoUpgrade = {
     # Force Clutter applications to use Wayland
     CLUTTER_BACKEND = "wayland";
     # Set XDG environment variables
-    XDG_CURRENT_DESKTOP = "sway";
+    XDG_CURRENT_DESKTOP = "hyprland";
     XDG_SESSION_TYPE = "wayland";
     # Enable Wayland for Electron applications
     NIXOS_OZONE_WL = "1";

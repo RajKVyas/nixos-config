@@ -7,18 +7,20 @@
 { config, pkgs, lib, specialArgs ? {}, ... }:
 
 let
-  hostType = specialArgs.hostType or "desktop";
+  systemType = specialArgs.systemType or "desktop";
 in {
-  imports =
-    [
-      ./system.nix
-      ./users.nix
-      ./packages.nix
-    ] 
-    ++ lib.optionals (hostType != "wsl") [
-      ./desktop.nix
-      ./hardware.nix
-    ];
+imports =
+  [
+    ./system.nix
+    ./users.nix
+    ./packages.nix
+  ]
+  ++ lib.optionals (lib.elem systemType [ "nvidia" "vm" "wsl" ]) [
+    ./desktop.nix
+  ]
+  ++ lib.optionals (systemType != "wsl") [
+    ./hardware.nix
+  ];
 
   system.stateVersion = "25.05";
 }

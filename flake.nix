@@ -18,59 +18,46 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: let
+commonModules = [
+  ./configuration.nix
+  inputs.home-manager.nixosModules.default
+  { home-manager.users.raj = import ./home/raj/home.nix; }
+  inputs.nix-flatpak.nixosModules.default
+];
+in {
     nixosConfigurations = {
       # Bare metal PC
-      "r-pc" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-          systemType = "nvidia"; # Set based on your hardware
-        };
-        modules = [
-          ./configuration.nix
-          inputs.home-manager.nixosModules.default
-          ./hosts/r-pc
-
-          # Home-manager configuration for the main user
-          {
-            home-manager.users.raj = import ./home/raj/home.nix;
-          }
-        ];
+    "r-pc" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = {
+        inherit inputs;
+        systemType = "nvidia"; # Set based on your hardware
       };
+      modules = commonModules ++ [ ./hosts/r-pc ];
+    };
 
       # Generic VM configuration
-      "vm-generic" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-          systemType = "vm";
-        };
-        modules = [
-          ./configuration.nix
-          inputs.home-manager.nixosModules.default
-          ./hosts/vm-generic
-          {
-            home-manager.users.raj = import ./home/raj/home.nix;
-          }
-        ];
+    "vm-generic" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = {
+        inherit inputs;
+        systemType = "vm";
       };
+      modules = commonModules ++ [ ./hosts/vm-generic ];
+    };
 
       # WSL configuration
-      "wsl" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit inputs;
-          hostType = "wsl";
-        };
-        modules = [
-          ./configuration.nix
-          ./hosts/wsl
-          # Add Home Manager for WSL
-          inputs.home-manager.nixosModules.default
-          { home-manager.users.raj = import ./home/raj/home.nix; }
-        ];
-      };
+    "wsl" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+specialArgs = {
+  inherit inputs;
+  systemType = "wsl";
+  # Make nix-flatpak available to all configurations
+  nix-flatpak = inputs.nix-flatpak;
+};
+      modules = commonModules ++ [ ./hosts/wsl ];
+    };
     };
 
     devShells.x86_64-linux.default = let

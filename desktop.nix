@@ -33,6 +33,10 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-emoji
+
+    # Nerd Fonts for icon support (only keep essential fonts)
+    nerd-fonts.jetbrains-mono  # Used by Kitty terminal and Starship
+    nerd-fonts.symbols-only    # Provides essential icons
   ];
   fonts.fontconfig.enable = true; # Enable Fontconfig for font customization
 

@@ -21,13 +21,5 @@
     initialHashedPassword = null;
   };
 
-  # Home Manager configuration
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    backupFileExtension = "hm-bak";
-    
-    # Reference your home.nix configuration
-    users.raj = import ./home/raj/home.nix;
-  };
+
 }
