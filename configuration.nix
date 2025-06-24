@@ -4,10 +4,10 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, specialArgs ? {}, ... }:
 
 let
-  hostType = config.specialArgs.hostType or "desktop";
+  hostType = specialArgs.hostType or "desktop";
 in {
   imports =
     [

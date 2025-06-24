@@ -76,13 +76,12 @@
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in pkgs.mkShell {
-      packages = with pkgs; [
-        alejandra
-        nil
-        git
-        nh
-        sops
-      ];
+        packages = with pkgs; [
+          alejandra
+          nil
+          git
+          nh
+        ];
     };
   };
 }
