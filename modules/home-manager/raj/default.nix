@@ -17,6 +17,7 @@
     enable = true;
     userName = "Raj Kumar Vyas";
     userEmail = "inbox@rajvyas.com";
+    configExtra = { init.defaultBranch = main }
   };
 
   systemd.user.services.vesktop = {
