@@ -1,3 +1,3 @@
 cd /etc/nixos
-nix flake update
+sudo nix flake update
 sudo nixos-rebuild switch
