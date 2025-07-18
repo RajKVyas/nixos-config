@@ -6,6 +6,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernel.sysctl."vm.max_map_count" = 2147483642;
 
   # Networking
   networking.networkmanager.enable = true;

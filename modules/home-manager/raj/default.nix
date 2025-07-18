@@ -22,16 +22,19 @@
 
   systemd.user.services.vesktop = {
     Unit = {
-      Description = "Start Vesktop Discord client";
+      Description = "Start Vesktop on login";
       After = [ "graphical-session.target" ];
     };
     Install = {
       WantedBy = [ "graphical-session.target" ];
     };
     Service = {
+      Type = "oneshot";
+    
+      RemainAfterExit = true;
+    
       ExecStart = "${pkgs.vesktop}/bin/vesktop";
     };
   };
-
 
 }

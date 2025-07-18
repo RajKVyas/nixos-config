@@ -46,6 +46,10 @@
       options = [ "rw" "uid=1000" "gid=100" "nofail" ];
     };
   };
+
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel power_save=0
+  '';
   
   users.users.raj = {
     isNormalUser = true;
