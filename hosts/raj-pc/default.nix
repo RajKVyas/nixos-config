@@ -8,6 +8,7 @@
     ../../modules/nixos/packages.nix
     ../../modules/nixos/gnome.nix
     ../../modules/nixos/sdrtrunk-overlay.nix
+    ../../modules/nixos/dsd-fme-overlay.nix
     # We will add more here later, like hyprland.nix, nvidia.nix, etc.
   ];
 
