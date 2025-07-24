@@ -7,6 +7,7 @@
     ../../modules/nixos/core.nix
     ../../modules/nixos/packages.nix
     ../../modules/nixos/gnome.nix
+    ../../modules/nixos/sdrtrunk-overlay.nix
     # We will add more here later, like hyprland.nix, nvidia.nix, etc.
   ];
 
@@ -47,6 +48,8 @@
     };
   };
 
+  hardware.rtl-sdr.enable = true;
+
   boot.extraModprobeConfig = ''
     options snd_hda_intel power_save=0
   '';
@@ -54,7 +57,7 @@
   users.users.raj = {
     isNormalUser = true;
     description = "Raj Kumar Vyas";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "plugdev" ];
   };
 
   home-manager = {

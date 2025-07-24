@@ -8,5 +8,6 @@
     htop
     unzip
     p7zip
+    tree
   ];
 }
