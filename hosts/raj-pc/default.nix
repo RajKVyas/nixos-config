@@ -6,9 +6,8 @@
 
     ../../modules/nixos/core.nix
     ../../modules/nixos/packages.nix
+    ../../modules/nixos/nvidia-raj-pc.nix
     ../../modules/nixos/gnome.nix
-    ../../modules/nixos/sdrtrunk-overlay.nix
-    ../../modules/nixos/dsd-fme-overlay.nix
     # We will add more here later, like hyprland.nix, nvidia.nix, etc.
   ];
 
@@ -50,16 +49,24 @@
   };
 
   hardware.rtl-sdr.enable = true;
-
+  services.udev.packages = [ pkgs.rtl-sdr ];
+  boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
+  
   boot.extraModprobeConfig = ''
     options snd_hda_intel power_save=0
   '';
-  
+
+  boot.binfmt.emulatedSystems = [
+    "x86_64-windows"
+    "i686-windows" # For 32-bit Windows executables
+  ];
+
   users.users.raj = {
     isNormalUser = true;
     description = "Raj Kumar Vyas";
     extraGroups = [ "networkmanager" "wheel" "plugdev" ];
   };
+
 
   home-manager = {
     useGlobalPkgs = true;

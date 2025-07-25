@@ -9,5 +9,9 @@
     unzip
     p7zip
     tree
+    winetricks
+    wineWow64Packages.stagingFull
   ];
+
+  programs.steam.enable = true;
 }
