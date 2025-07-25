@@ -12,6 +12,12 @@
     winetricks
     wineWow64Packages.stagingFull
   ];
+
+  fonts.enableDefaultPackages = true;
+  fonts.fontconfig.defaultFonts.monospace = ["FiraCode Nerd Font Mono 11"];
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+  ];
   
   programs.zsh.enable = true;
   programs.steam.enable = true;

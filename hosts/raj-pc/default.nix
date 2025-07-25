@@ -61,6 +61,8 @@
     "i686-windows" # For 32-bit Windows executables
   ];
 
+  virtualisation.docker.enable = true;
+
   users.users.raj = {
     isNormalUser = true;
     description = "Raj Kumar Vyas";

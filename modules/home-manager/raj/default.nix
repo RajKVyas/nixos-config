@@ -20,9 +20,20 @@
     gqrx
     sdrpp
     tmux
-    nerd-fonts.fira-code
+    duf
+    zoxide
+    fzf
+    tldr
+    bitwarden
+    
     wl-clipboard
   ];
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true; # see note on other shells below
+    nix-direnv.enable = true;
+  };
 
 
   programs.git = {
@@ -62,9 +73,6 @@
       l = "ls -lah";
       ll = "ls -l";
       ls = "ls --color=auto";
-
-      # Print directory context for LLMs
-      aicontext = "find . -type f -not -path '*/.git/*' -not -path '*/result/*' -exec echo '--- File: {} ---' \\; -exec bat --paging=never --color=always {} + | wl-copy && echo 'Directory context copied to clipboard!'";
     };
   };
 
