@@ -12,6 +12,7 @@
     winetricks
     wineWow64Packages.stagingFull
   ];
-
+  
+  programs.zsh.enable = true;
   programs.steam.enable = true;
 }

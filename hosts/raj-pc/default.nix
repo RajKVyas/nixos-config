@@ -65,6 +65,7 @@
     isNormalUser = true;
     description = "Raj Kumar Vyas";
     extraGroups = [ "networkmanager" "wheel" "plugdev" ];
+    shell = pkgs.zsh;
   };
 
 
