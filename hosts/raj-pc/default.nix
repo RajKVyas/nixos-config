@@ -11,6 +11,9 @@
     # We will add more here later, like hyprland.nix, nvidia.nix, etc.
   ];
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   fileSystems = {
     "/mnt/projects" = {
       device = "/dev/disk/by-uuid/5AB84472B8444F27";
