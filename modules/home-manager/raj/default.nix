@@ -100,7 +100,7 @@
         diverged = "󰦓 ";
         untracked = " ";
         staged = "[++\\($count\\)](green) ";
-        modified = "[! \\($count\\)](yellow) ";
+        modified = "[! \\($count\\) '\\(ᗒᗣᗕ\\)՞](yellow) ";
         renamed = "[» \\($count\\)](green) ";
         deleted = "[--\\($count\\)](red) ";
       };

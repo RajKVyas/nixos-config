@@ -3,7 +3,7 @@
 {
   imports = [
     # This file will be generated during installation
-    ./hardware.nix
+    #./hardware.nix UNCOMMENT LATER
 
     # Common modules shared with your PC
     ../../modules/nixos/core.nix

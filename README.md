@@ -17,6 +17,6 @@
 
 # og:
 
-- cd /etc/nixos
-- sudo nix flake update
-- sudo nixos-rebuild switch --flake /etc/nixos#raj-pc
+- "cd /etc/nixos"
+- "sudo nix flake update"
+- "sudo nixos-rebuild switch --flake /etc/nixos#raj-pc" or $(hostname)
