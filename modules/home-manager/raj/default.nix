@@ -25,7 +25,7 @@
     fzf
     tldr
     bitwarden
-    
+    prismlauncher    
     wl-clipboard
   ];
 
@@ -58,7 +58,7 @@
     shellAliases = {
       # NixOS Management
       nrs = "sudo nixos-rebuild switch --flake /etc/nixos#$(hostname)";
-      nfu = "sudo nix flake update /etc/nixos";
+      nfu = "sudo nix flake update";
       cdn = "cd /etc/nixos";
 
       # Git Actions

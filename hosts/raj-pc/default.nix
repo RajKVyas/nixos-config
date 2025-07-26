@@ -48,6 +48,14 @@
     };
   };
 
+  zramSwap.enable = true;
+
+  swapDevices = [{
+    device = "/swapfile";
+    size = 64 * 1024; # 64GB
+  }];
+
+
   hardware.rtl-sdr.enable = true;
   services.udev.packages = [ pkgs.rtl-sdr ];
   boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" ];
@@ -66,10 +74,48 @@
   users.users.raj = {
     isNormalUser = true;
     description = "Raj Kumar Vyas";
-    extraGroups = [ "networkmanager" "wheel" "plugdev" ];
+    extraGroups = [ "networkmanager" "wheel" "plugdev" "docker" "users" ];
     shell = pkgs.zsh;
   };
 
+  users.users.sambauser = {
+    isSystemUser = true;
+    group = "users";
+    home = "/var/empty";
+    shell = "/run/current-system/sw/bin/nologin";
+  };
+
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+
+    settings = {
+      # Options from your old `extraConfig` go into the `global` section.
+      global = {
+        "hosts allow" = "127. 192.168. 10.";
+      };
+
+      # Your old `shares` definition is now a section inside `settings`.
+      media = {
+        path = "/mnt/media";
+        browseable = "yes";
+        "guest ok" = "yes";
+        writable = "yes";
+        "write list" = "sambauser";
+        "force user" = "sambauser";
+        "force group" = "users";
+        "create mask" = "0664";
+        "directory mask" = "0775";
+      };
+    };
+  };
+
+
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+    user="raj";
+  };
 
   home-manager = {
     useGlobalPkgs = true;
