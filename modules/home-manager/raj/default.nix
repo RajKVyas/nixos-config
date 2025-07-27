@@ -27,6 +27,7 @@
     bitwarden
     prismlauncher    
     wl-clipboard
+    spot
   ];
 
   programs.direnv = {
